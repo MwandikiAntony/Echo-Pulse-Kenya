@@ -3,7 +3,8 @@ import Card from '../components/Card';
 import TaskInput from '../components/TaskInput';
 import Button from '../components/Button';
 import { useLocalStorage } from '../hooks/useLocalStorage';
-import { fetchEcoFacts } from '../api/fetchFacts';
+import { fetchEcoFacts } from '../api/ecoFactsApi';
+
 
 const Home = () => {
   const [tasks, setTasks] = useLocalStorage('ecoTasks', []);
