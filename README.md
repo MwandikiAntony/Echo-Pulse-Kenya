@@ -25,16 +25,7 @@ Users can log activities like planting trees, recycling, or conserving water —
 ---
 
 ## 🎨 Screenshots
-
-> 📸 To add screenshots, take them using your browser or OS screenshot tool and save them inside your project — for example in a folder named `assets/screenshots/`.
-
-Then upload the images to your GitHub repo and link them here like this:
-
-```markdown
-![Home Page Light Mode](assets/screenshots/home-light.png)
-![Home Page Dark Mode](assets/screenshots/home-dark.png)
-![Eco Tips Section](assets/screenshots/eco-tips.png)
-![Badge Notification](assets/screenshots/badges.png)
+![Screenshot](assets/screenshots/ecopulsekenya.png)
 
 
 ✅ Recommended screenshots:
@@ -123,33 +114,3 @@ Name: Antony Mwandiki
 
 MIT License © 2025 — feel free to fork, improve, and share 🌱
 
-📂 Screenshot Folder Structure
-
-👉 In your project folder:
-
-ecopulse-kenya/
-├── assets/
-│   └── screenshots/
-│       ├── home-light.png
-│       ├── home-dark.png
-│       ├── eco-tips.png
-│       └── badges.png
-└── README.md
-
-
-Then just link them in your README like this:
-
-![Screenshot](assets/ecopulsekenya.png)
-
-
----
-
-### ✅ To finish setup:
-1. Create a folder:  
-   `assets/screenshots/` in your project root.  
-2. Add your `.png` or `.jpg` screenshots there.  
-3. Commit the images and README to GitHub:
-   ```bash
-   git add .
-   git commit -m "Add README and screenshots"
-   git push origin main
