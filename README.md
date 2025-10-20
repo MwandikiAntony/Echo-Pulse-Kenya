@@ -27,17 +27,6 @@ Users can log activities like planting trees, recycling, or conserving water —
 ## 🎨 Screenshots
 ![Screenshot](assets/screenshots/ecopulsekenya.png)
 
-
-✅ Recommended screenshots:
-
-Home Page (Light Mode)
-
-Home Page (Dark Mode)
-
-Eco Tips section
-
-Badge Notification popup
-
 🛠️ Technologies Used
 Category	Tools / Libraries
 Frontend	React.js, JSX, Tailwind CSS
