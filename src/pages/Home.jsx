@@ -5,7 +5,7 @@ import Button from '../components/Button';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { fetchEcoFacts } from '../api/ecoFactsApi';
 import { motion, AnimatePresence } from 'framer-motion';
-import { toast } from 'react-hot-toast'; // ✅ for notifications
+import { toast } from 'react-hot-toast';
 
 const Home = () => {
   const [tasks, setTasks] = useLocalStorage('ecoTasks', []);
@@ -15,7 +15,6 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  // ✅ Fetch Eco Facts (Tips)
   useEffect(() => {
     fetchEcoFacts()
       .then(setFacts)
@@ -23,7 +22,6 @@ const Home = () => {
       .finally(() => setLoading(false));
   }, []);
 
-  // ✅ Add New Task
   const addTask = () => {
     if (!task.trim()) return toast.error('Please enter a task!');
     const newTask = { id: Date.now(), text: task, completed: false };
@@ -32,44 +30,53 @@ const Home = () => {
     toast.success('Eco task added!');
   };
 
-  // ✅ Toggle Completion
   const toggleComplete = id => {
-    const updated = tasks.map(t => (t.id === id ? { ...t, completed: !t.completed } : t));
+    const updated = tasks.map(t =>
+      t.id === id ? { ...t, completed: !t.completed } : t
+    );
     setTasks(updated);
     toast.success('Task status updated!');
   };
 
-  // ✅ Delete Task
   const deleteTask = id => {
     setTasks(tasks.filter(t => t.id !== id));
     toast.error('Task deleted');
   };
 
-  // ✅ Task Filters
   const filteredTasks = tasks.filter(t => {
     if (filter === 'completed') return t.completed;
     if (filter === 'pending') return !t.completed;
     return true;
   });
 
-  // ✅ Progress Bar Calculation
   const totalTasks = tasks.length;
   const completedTasks = tasks.filter(t => t.completed).length;
   const progress = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
 
   return (
-    <div className="p-4 sm:p-6 md:p-8 max-w-3xl mx-auto">
-      <h2 className="text-3xl font-bold mb-4 text-green-700 dark:text-green-300 text-center">
-        🌿 Track Your Green Actions
-      </h2>
+    <div className="px-4 sm:px-8 md:px-16 py-10 w-full flex-grow bg-gradient-to-b from-green-50 to-white dark:from-gray-900 dark:to-gray-800 transition-colors">
+      {/* Header Section */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="text-center mb-10"
+      >
+        <h1 className="text-4xl sm:text-5xl font-extrabold text-green-700 dark:text-green-300 mb-3">
+          🌿 EcoPulse Kenya
+        </h1>
+        <p className="text-gray-600 dark:text-gray-300 text-lg">
+          Track your eco-friendly actions and inspire a greener tomorrow 🌍
+        </p>
+      </motion.div>
 
       {/* Task Input */}
-      <div className="flex flex-col sm:flex-row gap-2 mb-6">
+      <div className="max-w-2xl mx-auto mb-10">
         <TaskInput task={task} setTask={setTask} addTask={addTask} />
       </div>
 
-      {/* Filter & Progress */}
-      <div className="flex flex-col sm:flex-row items-center justify-between mb-4">
+      {/* Filter + Progress Section */}
+      <div className="max-w-3xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 mb-8 bg-white/60 dark:bg-gray-800/50 p-4 rounded-xl shadow-md backdrop-blur-md">
+        {/* Filters */}
         <div className="flex gap-2">
           {['all', 'completed', 'pending'].map(type => (
             <Button
@@ -82,12 +89,14 @@ const Home = () => {
           ))}
         </div>
 
-        <div className="w-full sm:w-1/3 mt-4 sm:mt-0">
-          <div className="w-full bg-gray-300 dark:bg-gray-700 rounded-full h-3">
-            <div
-              className="bg-green-500 h-3 rounded-full transition-all duration-500"
+        {/* Progress */}
+        <div className="w-full sm:w-1/3">
+          <div className="w-full bg-gray-300 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
+            <motion.div
+              className="bg-green-500 h-3 rounded-full"
               style={{ width: `${progress}%` }}
-            ></div>
+              transition={{ duration: 0.5 }}
+            />
           </div>
           <p className="text-sm text-center text-gray-600 dark:text-gray-300 mt-1">
             {completedTasks}/{totalTasks} completed
@@ -96,50 +105,65 @@ const Home = () => {
       </div>
 
       {/* Task List */}
-      <AnimatePresence>
-        {filteredTasks.map(t => (
-          <motion.div
-            key={t.id}
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            transition={{ duration: 0.3 }}
-          >
-            <Card
-              title={t.text}
-              description={`Status: ${t.completed ? '✅ Done' : '❌ Pending'}`}
+      <div className="max-w-3xl mx-auto">
+        <AnimatePresence>
+          {filteredTasks.map(t => (
+            <motion.div
+              key={t.id}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ duration: 0.3 }}
+              className="mb-4"
             >
-              <div className="flex gap-2 mt-2 justify-center sm:justify-start">
-                <Button variant="secondary" onClick={() => toggleComplete(t.id)}>
-                  {t.completed ? 'Undo' : 'Complete'}
-                </Button>
-                <Button variant="danger" onClick={() => deleteTask(t.id)}>
-                  Delete
-                </Button>
-              </div>
-            </Card>
-          </motion.div>
-        ))}
-      </AnimatePresence>
+              <Card
+                title={t.text}
+                description={`Status: ${t.completed ? '✅ Done' : '❌ Pending'}`}
+              >
+                <div className="flex gap-2 mt-2 justify-center sm:justify-start">
+                  <Button
+                    variant="secondary"
+                    onClick={() => toggleComplete(t.id)}
+                  >
+                    {t.completed ? 'Undo' : 'Complete'}
+                  </Button>
+                  <Button variant="danger" onClick={() => deleteTask(t.id)}>
+                    Delete
+                  </Button>
+                </div>
+              </Card>
+            </motion.div>
+          ))}
+        </AnimatePresence>
 
-      {/* No Tasks Message */}
-      {filteredTasks.length === 0 && (
-        <p className="text-gray-500 dark:text-gray-400 text-center mt-6">
-          No tasks to show here ✨
-        </p>
-      )}
+        {filteredTasks.length === 0 && (
+          <p className="text-gray-500 dark:text-gray-400 text-center mt-6">
+            No tasks yet — start your green journey 🌱
+          </p>
+        )}
+      </div>
 
-      {/* Eco Facts Section */}
-      <h2 className="text-2xl font-bold mb-2 mt-8 text-green-600 dark:text-green-400 text-center">
-        🌎 Eco Tips
-      </h2>
-      {loading && <p className="text-center">Loading tips...</p>}
-      {error && <p className="text-red-500 text-center">{error}</p>}
+      {/* Eco Tips */}
+      <div className="max-w-5xl mx-auto mt-16">
+        <h2 className="text-3xl font-bold text-green-700 dark:text-green-400 text-center mb-6">
+          🌎 Eco Tips & Facts
+        </h2>
 
-      <div className="grid sm:grid-cols-2 gap-4 mt-4">
-        {facts.map(f => (
-          <Card key={f.id} title={f.title} description={f.body} />
-        ))}
+        {loading && <p className="text-center text-gray-600">Loading tips...</p>}
+        {error && <p className="text-red-500 text-center">{error}</p>}
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+          {facts.map(f => (
+            <motion.div
+              key={f.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4 }}
+            >
+              <Card title={f.title} description={f.body} />
+            </motion.div>
+          ))}
+        </div>
       </div>
     </div>
   );
