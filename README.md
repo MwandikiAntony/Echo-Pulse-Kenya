@@ -100,7 +100,7 @@ src/
 
 🌐 Deployment
 
-Deployed URL: [Add your live app link here]
+Deployed URL: https://ecopulse-kenya.vercel.app/
 
 ✅ How to Use
 
