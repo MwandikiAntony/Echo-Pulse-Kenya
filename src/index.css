@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --- GLOBAL RESET & BASE LAYOUT --- */
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Let Tailwind handle layout — don’t restrict width or centering */
+body {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #213547;
+  background-color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Optional link & button tweaks */
+a {
+  color: #16a34a;
+  text-decoration: none;
+}
+a:hover {
+  color: #288ce9;
+}
+
+button {
+  border-radius: 8px;
+  padding: 0.6em 1.2em;
+  font-weight: 500;
+  transition: all 0.25s;
+}
+
+/* Remove Vite starter logo demo styles */
+.logo, .card, .read-the-docs {
+  all: unset;
+}
